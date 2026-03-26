@@ -14,7 +14,7 @@ public:
         ans[1]=maximum;
         pair<int ,pair<int,int>> element;
         int i,j,value;
-        while(minHeap.size()==nums.size())
+        while(true)
         {
             element=minHeap.top();
             minHeap.pop();
@@ -32,6 +32,7 @@ public:
                     ans[0]=minimum;
                 }
             }
+            else break;
         }
         return ans;
     }
