@@ -1,1 +1,1 @@
-<h2>smallest-range-covering-elements-from-k-lists Notes</h2><hr>[ Time taken: 5hrs 43m 50s ]
+<h2>smallest-range-covering-elements-from-k-lists Notes</h2><hr>[ Time taken: 5hrs 54m 6s ]
