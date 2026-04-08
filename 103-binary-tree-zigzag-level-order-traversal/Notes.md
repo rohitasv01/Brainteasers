@@ -1,1 +1,1 @@
-<h2>binary-tree-zigzag-level-order-traversal Notes</h2><hr>[ Time taken: 1hr 17m 45s ]
+<h2>binary-tree-zigzag-level-order-traversal Notes</h2><hr>[ Time taken: 1hr 59m 16s ]
