@@ -13,20 +13,24 @@ class Solution {
 public:
     vector<string> binaryTreePaths(TreeNode* root) {
         vector<string> ans;
-        traverse(root,"",ans);
+        string path="";
+        dfs(root,path,ans);
         return ans;
     }
-    void traverse(TreeNode* node,string path,vector<string> &ans)
+    void dfs(TreeNode* node,string &path,vector<string> & ans)
     {
-        if(node==NULL)  return ;
-        if(path!="") path+="->";
+        if(node==NULL)  return;
+        int len=path.size();
+        if(path.size()!=0)  path+="->";
         path+=to_string(node->val);
-        if(!node->left && !node->right)
+        if(!node->left && !node->right) 
         {
             ans.push_back(path);
+            path.resize(len);
             return ;
-        } 
-        traverse(node->left,path,ans);
-        traverse(node->right,path ,ans);
+        }
+        dfs(node->left,path,ans);
+        dfs(node->right,path,ans);
+        path.resize(len);
     }
 };
