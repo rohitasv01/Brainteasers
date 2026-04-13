@@ -1,1 +1,1 @@
-<h2>binary-tree-paths Notes</h2><hr>[ Time taken: 4hrs 42m 27s ]
+<h2>binary-tree-paths Notes</h2><hr>[ Time taken: 5hrs 15m 11s ]
