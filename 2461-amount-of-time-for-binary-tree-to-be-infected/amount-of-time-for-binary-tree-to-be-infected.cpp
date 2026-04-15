@@ -11,9 +11,9 @@
  */
 class Solution {
 public:
-    TreeNode* markParent(TreeNode* root,unordered_map<TreeNode* ,TreeNode*> &parent,int start)
+    TreeNode * markParent( unordered_map<TreeNode* ,TreeNode*> &parent,TreeNode* root,int start)
     {
-        queue<TreeNode*>q;
+        queue<TreeNode*> q;
         q.push(root);
         TreeNode* target;
         while(q.size()!=0)
@@ -23,7 +23,7 @@ public:
             {
                 TreeNode* node=q.front();
                 q.pop();
-                if(node->val==start)    target=node;
+                if(node->val==start)  target=node;
                 if(node->left)
                 {
                     q.push(node->left);
@@ -39,28 +39,27 @@ public:
         return target;
     }
     int amountOfTime(TreeNode* root, int start) {
-        unordered_map<TreeNode* ,TreeNode*> parent;
-        TreeNode* target=markParent(root,parent,start);
-
-        unordered_map<TreeNode*,bool>visited;
-        visited[target]=true;
+        unordered_map<TreeNode* ,TreeNode*>parent;
+        TreeNode* target= markParent(parent,root,start);
         queue<TreeNode*> q;
         q.push(target);
         int time=-1;
+        unordered_map<TreeNode*,bool> visited;
+        visited[target]=true;
         while(q.size()!=0)
         {
-            time++;
             int size=q.size();
+            time++;
             for(int i=0;i<size;i++)
             {
-                TreeNode* node=q.front();
+                TreeNode *node=q.front();
                 q.pop();
                 if(parent[node] && !visited[parent[node]])
                 {
                     q.push(parent[node]);
                     visited[parent[node]]=true;
                 }
-                if(node->left && !visited[node->left])
+                if(node->left  && !visited[node->left])
                 {
                     q.push(node->left);
                     visited[node->left]=true;
@@ -73,6 +72,5 @@ public:
             }
         }
         return time;
-        
     }
 };
