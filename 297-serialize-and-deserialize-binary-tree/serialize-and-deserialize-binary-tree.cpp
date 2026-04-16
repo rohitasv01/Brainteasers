@@ -33,12 +33,12 @@ public:
 
     // Decodes your encoded data to tree.
     TreeNode* deserialize(string data) {
-        if (data=="")   return NULL;
+        if(data=="")    return NULL;
         stringstream ss(data);
         string str;
         getline(ss,str,',');
         TreeNode* root=new TreeNode(stoi(str));
-        queue<TreeNode*> q;
+        queue<TreeNode*>q;
         q.push(root);
         while(q.size()!=0)
         {
