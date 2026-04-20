@@ -11,18 +11,35 @@
  */
 class Solution {
 public:
-    int ans=-1;
     int kthSmallest(TreeNode* root, int k) {
-        int count =0;
-        traverse(root,count,k);
+        TreeNode* curr=root;
+        int count=0,ans=-1;
+        while(curr)
+        {
+            if(curr->left==NULL)
+            {
+                count++;
+                if(count==k)    ans= curr->val;
+                curr=curr->right;
+            }
+            else
+            {
+                TreeNode* pred=curr->left;
+                while(pred->right && pred->right!=curr)   pred=pred->right;
+                if(pred->right==NULL)
+                {
+                    pred->right=curr;
+                    curr=curr->left;
+                }
+                else
+                {
+                    pred->right=NULL;
+                    count++;
+                    if(count==k)    ans= curr->val;
+                    curr=curr->right;
+                }
+            }
+        }
         return ans;
-    }
-    void traverse(TreeNode* root,int &count,int k)
-    {
-        if (root==NULL) return ;
-        traverse(root->left,count,k);
-        count++;
-        if(count==k)    ans= root->val;
-        traverse(root->right,count ,k);
     }
 };
