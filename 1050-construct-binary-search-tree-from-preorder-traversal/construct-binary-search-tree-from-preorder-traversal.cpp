@@ -12,9 +12,9 @@
 class Solution {
 public:
     int i=0;
-    TreeNode* build(vector<int> & preorder,int maxVal)
+    TreeNode* build(vector<int> &preorder, int maxVal)
     {
-        if(i==preorder.size() ||preorder[i]>maxVal) return NULL;
+        if(i==preorder.size() || preorder[i]>=maxVal)   return NULL;
         TreeNode* root=new TreeNode(preorder[i++]);
         root->left=build(preorder,root->val);
         root->right=build(preorder,maxVal);
