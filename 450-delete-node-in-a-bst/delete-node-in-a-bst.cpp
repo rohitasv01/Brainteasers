@@ -12,35 +12,42 @@
 class Solution {
 public:
     TreeNode* deleteNode(TreeNode* root, int key) {
-        TreeNode* parent=NULL;
         TreeNode* curr=root;
+        TreeNode* parent=NULL;
         while(curr && curr->val!=key)
         {
-            parent=curr;
-            if(curr->val>key)   curr=curr->left;
-            else curr=curr->right;
+            parent =curr;
+            curr=(curr->val>key) ?curr->left : curr->right;
         }
-        if(curr==NULL) return root;
+        if(curr==NULL)  return root;
         if(curr->left && curr->right)
         {
             TreeNode* succ=curr->right;
             TreeNode* succP=curr;
-            while(succ->left)   
+            while(succ->left)
             {
                 succP=succ;
                 succ=succ->left;
             }
             curr->val=succ->val;
-            parent=succP;
             curr=succ;
+            parent=succP;
         }
         TreeNode* child;
-        if(curr->left)   child=curr->left;
+        if(curr->left)  child=curr->left;
         else child=curr->right;
         if(parent==NULL)    return child;
-        if(parent->left==curr)  parent->left=child;
-        else    parent->right=child;
-        delete curr ;
+        if(parent->left==curr) 
+        {
+            parent ->left=child;
+            delete curr;
+        }
+        else
+        {
+            parent->right=child;
+            delete curr;
+        }
         return root;
     }
+
 };
