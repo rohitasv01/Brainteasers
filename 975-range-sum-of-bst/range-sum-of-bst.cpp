@@ -11,16 +11,13 @@
  */
 class Solution {
 public:
-    int sum=0;
-    void traverse(TreeNode* node,int low,int high)
-    {
-        if(node==NULL)  return ;
-        traverse(node->left,low ,high);
-        if(node->val>=low && node->val<=high)  sum+=node->val;
-        traverse(node->right,low,high);
-    }
     int rangeSumBST(TreeNode* root, int low, int high) {
-        traverse (root,low,high);
-        return sum;
+        if(root==NULL)  return 0;
+        if(root->val<low)   return rangeSumBST(root->right,low,high);
+        else if(root->val>high) return rangeSumBST(root->left,low,high);
+        else
+        {
+            return root->val+rangeSumBST(root->left,low,high)+rangeSumBST(root->right,low ,high);
+        }
     }
 };
