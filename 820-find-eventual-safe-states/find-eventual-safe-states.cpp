@@ -1,36 +1,35 @@
 class Solution {
 public:
-    bool dfs(int i,vector<int> &visited,vector<int> & pathVisited,vector<int> & safe,vector<vector<int>>& graph)
-    {
-        visited[i]=1;
-        pathVisited[i]=1;
-        for(int neighbour:graph[i])
-        {
-            if(visited[neighbour]==0)
-            {
-                if(dfs(neighbour,visited,pathVisited,safe,graph))
-                return true;
-            }
-            else if(pathVisited[neighbour]) return true;
-        }
-        safe[i]=1;
-        pathVisited[i]=0;
-        return false;
-    }
     vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
         int n=graph.size();
-        vector<int> visited(n,0);
-        vector<int> pathVisited(n,0);
-        vector<int> safe(n,0);
+        vector<vector<int>> rev(n);
+        vector<int> indegree(n,0);
+        for(int u=0;u<n;u++)
+        {
+            for(int v:graph[u])
+            { 
+                rev[v].push_back(u);
+                indegree[u]++;
+            }
+        }
+        queue<int>q;
         for(int i=0;i<n;i++)
         {
-            if(!visited[i]) dfs(i,visited,pathVisited,safe,graph);
+            if(indegree[i]==0)  q.push(i);
         }
         vector<int> ans;
-        for(int i=0;i<n;i++)
+        while(q.size())
         {
-            if(safe[i]==1)  ans.push_back(i);
+            int node=q.front();
+            q.pop();
+            ans.push_back(node);
+            for(int neighbour :rev[node])
+            {
+                indegree[neighbour]--;
+                if(indegree[neighbour]==0)  q.push(neighbour);
+            }
         }
+        sort(ans.begin(),ans.end());
         return ans;
     }
 };
