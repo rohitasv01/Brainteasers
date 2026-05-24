@@ -1,12 +1,15 @@
 class Solution {
 public:
     int findTheCity(int n, vector<vector<int>>& edges, int distanceThreshold) {
-        vector<vector<int>> dist(n,vector<int>(n,INT_MAX));
-        for(int i=0;i<n;i++)    dist[i][i]=0;
+        vector<vector<pair<int,int>>>adj(n);
+        vector<vector<int>>distance(n,vector<int>(n,INT_MAX));
+        for(int i=0;i<n;i++)    distance[i][i]=0;
         for(auto it:edges)
         {
-            dist[it[0]][it[1]]=it[2];
-            dist[it[1]][it[0]]=it[2];
+            adj[it[0]].push_back({it[1],it[2]});
+            adj[it[1]].push_back({it[0],it[2]});
+            distance[it[0]][it[1]]=it[2];
+            distance[it[1]][it[0]]=it[2];
         }
         for(int via=0;via<n;via++)
         {
@@ -14,26 +17,26 @@ public:
             {
                 for(int j=0;j<n;j++)
                 {
-                    if(dist[i][via]==INT_MAX || dist[via][j]==INT_MAX)  continue;
-                    dist[i][j]= min(dist[i][j],dist[i][via]+dist[via][j]);
+                    if(distance[i][via]==INT_MAX || distance[via][j]==INT_MAX)  continue;
+                    distance[i][j]=min(distance[i][j],distance[i][via]+distance[via][j]);
                 }
             }
         }
-        vector<int> num(n,-1);
+        vector<int>number(n,-1);
         for(int i=0;i<n;i++)
         {
             for(int j=0;j<n;j++)
             {
-                if(dist[i][j]<=distanceThreshold)   num[i]++;
+                if(distance[i][j]<=distanceThreshold)   number[i]++;
             }
         }
         int node=-1,mini=INT_MAX;
         for(int i=0;i<n;i++)
         {
-            if(num[i]<= mini)// if equals to not here then it would me city wit smallest no in case of muliple cities
+            if(number[i] <= mini)
             {
                 node=i;
-                mini=num[i];
+                mini=number[i];
             }
         }
         return node;
