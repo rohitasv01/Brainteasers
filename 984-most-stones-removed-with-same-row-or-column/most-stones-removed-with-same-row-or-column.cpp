@@ -4,7 +4,7 @@ public:
     {
         public:
         vector<int> parent,size;
-        DisjointSet(int n)// constructor
+        DisjointSet(int n)
         {
             parent.resize(n+1);
             size.resize(n+1,1);
@@ -25,7 +25,7 @@ public:
                 parent[pu]=pv;
                 size[pv]+=size[pu];
             }
-            else
+            else 
             {
                 parent[pv]=pu;
                 size[pu]+=size[pv];
@@ -33,26 +33,25 @@ public:
         }
     };
     int removeStones(vector<vector<int>>& stones) {
-        int maxRow=0,maxCol=0;
+        int maxRow=0,maxCol=0,components=0;
         for(auto it:stones)
         {
             maxRow=max(maxRow,it[0]);
             maxCol=max(maxCol,it[1]);
         }
+        unordered_set<int> usedIndex;
         DisjointSet ds(maxRow+maxCol+1);
-        unordered_set<int> usedNodes;
         for(auto it:stones)
         {
             int rowIndex=it[0];
             int colIndex=it[1]+maxRow+1;
             ds.unionBySize(rowIndex,colIndex);
-            usedNodes.insert(rowIndex);
-            usedNodes.insert(colIndex);
+            usedIndex.insert(rowIndex);
+            usedIndex.insert(colIndex);
         }
-        int components=0;
-        for(auto node:usedNodes)
+        for(auto node:usedIndex)
         {
-            if(node==ds.findParent(node))  components++;
+            if(ds.parent[node]==node)   components++;
         }
         return stones.size()-components;
     }
