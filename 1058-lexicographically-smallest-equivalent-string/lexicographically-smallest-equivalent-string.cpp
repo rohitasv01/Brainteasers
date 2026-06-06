@@ -15,28 +15,13 @@ public:
             if(parent[node]==node)  return node;
             return parent[node]=findParent(parent[node]);
         }
-        void unionBySize(int u,int v)
+        void unionLexicographically(int u,int v)
         {
             int pu=findParent(u);
             int pv=findParent(v);
             if(pu==pv)  return;
-            if(size[pu]=size[pv])
-            {
-                int smaller=min(pu,pv);
-                int larger=max(pu,pv);
-                parent[larger]=smaller;
-                size[smaller]+=size[larger];
-            }
-            else if(size[pu]<size[pv])
-            {
-                parent[pu]=pv;
-                size[pv]+=size[pu];
-            }
-            else
-            {
-                parent[pv]=pu;
-                size[pu]+=size[pv];
-            }
+            if(pu<pv)   parent[pv]=pu;
+            else parent[pu]=pv;
         }
     };
     string smallestEquivalentString(string s1, string s2, string baseStr) {
@@ -44,7 +29,7 @@ public:
         int n=s1.size();
         for(int i=0;i<n;i++)
         {
-            ds.unionBySize(s1[i]-'a',s2[i]-'a');
+            ds.unionLexicographically(s1[i]-'a',s2[i]-'a');
         }
         string ans;
         for(auto it:baseStr)
