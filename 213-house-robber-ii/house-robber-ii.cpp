@@ -6,14 +6,15 @@ public:
     {
         int n=housesMoney.size();
         if(n==1)    return housesMoney[0];
-        vector<int> dp(n);
-        dp[0]=housesMoney[0];
-        dp[1]=max(housesMoney[0],housesMoney[1]);
+        int prev2=housesMoney[0];
+        int prev1=max(housesMoney[0],housesMoney[1]);
         for(int i=2;i< n;i++)
         {
-            dp[i]=max(dp[i-2]+housesMoney[i],dp[i-1]);
+            int curr =max(prev2+housesMoney[i],prev1);
+            prev2=prev1;
+            prev1=curr;
         }
-        return dp[n-1];
+        return prev1;
     }
     int rob(vector<int>& nums) {
         int n=nums.size();
