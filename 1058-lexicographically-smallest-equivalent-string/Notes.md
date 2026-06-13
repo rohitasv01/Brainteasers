@@ -1,1 +1,1 @@
-<h2>lexicographically-smallest-equivalent-string Notes</h2><hr>[ Time taken: 29m 20s ]
+<h2>lexicographically-smallest-equivalent-string Notes</h2><hr>[ Time taken: 1hr 32m 51s ]
