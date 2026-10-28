@@ -11,19 +11,15 @@
  */
 class Solution {
 public:
-    bool isSubtree(TreeNode* root, TreeNode* subRoot) {
-        if(root==NULL)  return false;
-        if(isSameTree(root,subRoot))    return true;
-        return isSubtree(root->left,subRoot) || isSubtree(root->right,subRoot);
-    }
- 
-    bool isSameTree(TreeNode* p1,TreeNode* p2)
+    bool isSameTree(TreeNode* node1, TreeNode* node2)
     {
-        if(p1==NULL || p2==NULL)
-        {
-            if(p1==p2)  return true;
-            else return false;
-        }
-        return (p1->val==p2->val) && isSameTree(p1->right,p2->right) && isSameTree(p1->left,p2->left);
+        if(!node1 && !node2)    return true;
+        if(!node1 || !node2 || node1->val != node2->val)    return false;
+        return isSameTree(node1->left, node2->left) && isSameTree(node1->right,node2->right);
+    }
+    bool isSubtree(TreeNode* root, TreeNode* subRoot) {
+        if(!root) return false;
+        if(isSameTree(root,subRoot))        return true;
+        return isSubtree(root->left,subRoot) || isSubtree(root->right,subRoot);
     }
 };
