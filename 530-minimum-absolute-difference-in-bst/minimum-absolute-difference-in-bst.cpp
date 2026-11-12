@@ -11,20 +11,18 @@
  */
 class Solution {
 public:
-    bool first=true;
-    int minDiff=INT_MAX;
-    int getMinimumDifference(TreeNode* root) {
-        int prev=0;
-        traverse(root,prev);
-        return minDiff;
-    }
-    void traverse(TreeNode* node,int &prev)
+    int ans=INT_MAX;
+    int prev=-1;
+    void solve(TreeNode* node)
     {
-        if(node==NULL)  return ;
-        traverse(node->left,prev);
-        if(first==false)    minDiff=min(minDiff,node->val-prev);
+        if(!node)   return;
+        solve(node->left);
+        if(prev!=-1)    ans=min(ans, node->val-prev);
         prev=node->val;
-        first=false;
-        traverse(node->right,prev);
+        solve(node->right);
+    }
+    int getMinimumDifference(TreeNode* root) {
+        solve(root);
+        return ans;
     }
 };
