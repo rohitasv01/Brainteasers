@@ -11,43 +11,40 @@
  */
 class Solution {
 public:
+    TreeNode* findSucc(TreeNode* node)
+    {
+        TreeNode* succ=node->right;
+        while(succ->left)
+        {
+            succ=succ->left;
+        }
+        return succ;
+    }
     TreeNode* deleteNode(TreeNode* root, int key) {
-        TreeNode* curr=root;
-        TreeNode* parent=NULL;
-        while(curr && curr->val!=key)
+        if(!root)   return root;
+        if(root->val==key)
         {
-            parent =curr;
-            curr=(curr->val>key) ?curr->left : curr->right;
-        }
-        if(curr==NULL)  return root;
-        if(curr->left && curr->right)
-        {
-            TreeNode* succ=curr->right;
-            TreeNode* succP=curr;
-            while(succ->left)
+            if(!root->left)
             {
-                succP=succ;
-                succ=succ->left;
+                TreeNode* temp=root->right;
+                delete root;
+                return temp;
+            }  
+            else if(!root->right)
+            {
+                TreeNode* temp=root->left;
+                delete root;
+                return temp;
+            } 
+            else 
+            {
+                TreeNode* succ=findSucc(root);
+                root->val=succ->val;
+                root->right=deleteNode(root->right,succ->val);
             }
-            curr->val=succ->val;
-            curr=succ;
-            parent=succP;
         }
-        TreeNode* child;
-        if(curr->left)  child=curr->left;
-        else child=curr->right;
-        if(parent==NULL)    return child;
-        if(parent->left==curr) 
-        {
-            parent ->left=child;
-            delete curr;
-        }
-        else
-        {
-            parent->right=child;
-            delete curr;
-        }
+        else if(root->val>key)  root->left=deleteNode(root->left, key);
+        else root->right=deleteNode(root->right, key);
         return root;
     }
-
 };
