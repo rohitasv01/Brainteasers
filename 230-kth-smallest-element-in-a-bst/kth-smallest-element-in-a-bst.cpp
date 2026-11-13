@@ -11,35 +11,18 @@
  */
 class Solution {
 public:
+    int ans=-1;
+    int count=0;
+    void inorderTraversal(TreeNode* node, int k)
+    {
+        if(!node)   return ;
+        inorderTraversal(node->left,k);
+        count++;
+        if(count==k)   ans=node->val;
+        inorderTraversal(node->right,k);
+    }
     int kthSmallest(TreeNode* root, int k) {
-        TreeNode* curr=root;
-        int count=0,ans=-1;
-        while(curr)
-        {
-            if(curr->left==NULL)
-            {
-                count++;
-                if(count==k)    ans= curr->val;
-                curr=curr->right;
-            }
-            else
-            {
-                TreeNode* pred=curr->left;
-                while(pred->right && pred->right!=curr)   pred=pred->right;
-                if(pred->right==NULL)
-                {
-                    pred->right=curr;
-                    curr=curr->left;
-                }
-                else
-                {
-                    pred->right=NULL;
-                    count++;
-                    if(count==k)    ans= curr->val;
-                    curr=curr->right;
-                }
-            }
-        }
+        inorderTraversal(root,k);
         return ans;
     }
 };
