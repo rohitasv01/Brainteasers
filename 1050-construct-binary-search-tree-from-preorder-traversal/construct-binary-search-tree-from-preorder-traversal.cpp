@@ -11,16 +11,17 @@
  */
 class Solution {
 public:
-    int i=0;
-    TreeNode* build(vector<int> &preorder, int maxVal)
+    TreeNode* build(vector<int> & preorder, int  &i, int bound)
     {
-        if(i==preorder.size() || preorder[i]>=maxVal)   return NULL;
-        TreeNode* root=new TreeNode(preorder[i++]);
-        root->left=build(preorder,root->val);
-        root->right=build(preorder,maxVal);
-        return root;
+        if(i==preorder.size() || preorder[i]>bound) return NULL;
+        TreeNode* node=new TreeNode(preorder[i]);
+        i++;
+        node->left=build(preorder,i,node->val);
+        node->right=build(preorder,i,bound);
+        return node;
     }
     TreeNode* bstFromPreorder(vector<int>& preorder) {
-        return build(preorder,INT_MAX);
+        int i=0;
+        return build(preorder,i,INT_MAX);
     }
 };
