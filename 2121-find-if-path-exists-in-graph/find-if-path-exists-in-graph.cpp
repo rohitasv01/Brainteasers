@@ -1,31 +1,32 @@
 class Solution {
 public:
     bool validPath(int n, vector<vector<int>>& edges, int source, int destination) {
-        vector<vector<int>>adj(n);
-        for(auto e:edges)
+        vector<vector<int>> adj(n);
+        for(auto edge :edges)
         {
-            int u=e[0];
-            int v=e[1];
+            int u=edge[0];
+            int v=edge[1];
             adj[u].push_back(v);
             adj[v].push_back(u);
         }
-        vector<int>visited(n,-1);
+        vector<bool> visited(n,false);
         queue<int>q;
         q.push(source);
-        visited[source]=1;
+        visited[source]=true;
         while(q.size())
         {
             int node=q.front();
             q.pop();
-            for(int neighbour:adj[node])
+            if(node==destination)   return true;
+            for(auto neighbour:adj[node])
             {
-                if(visited[neighbour]==-1)
+                if(!visited[neighbour])
                 {
+                    visited[neighbour]=true;
                     q.push(neighbour);
-                    visited[neighbour]=1;
                 }
             }
         }
-        return (visited[destination]==1)?true :false;
+        return false;
     }
 };
