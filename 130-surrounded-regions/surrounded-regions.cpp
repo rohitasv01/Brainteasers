@@ -1,37 +1,61 @@
 class Solution {
 public:
-    void dfs(int i,int j,vector<vector<char>>& board)
-    {
-        int n=board.size();
-        int m=board[0].size();
-        if(i<0 || j<0 || i>=n || j>=m || board[i][j]!='O')  return ;
-        board[i][j]='S';
-        dfs(i+1,j,board);
-        dfs(i,j+1,board);
-        dfs(i-1,j,board);
-        dfs(i,j-1,board);
-    }
     void solve(vector<vector<char>>& board) {
         int n=board.size();
         int m=board[0].size();
-        //first and last row 
+        queue<pair<int,int>> q;
+        //first and last row
         for(int i=0;i<m;i++)
         {
-            if(board[0][i]=='O')     dfs(0,i,board);
-            if(board[n-1][i]=='O')   dfs(n-1,i,board);
+            if(board[0][i]=='O')    
+            {
+                q.push({0,i});
+                board[0][i]='S';
+            }
+            if(board[n-1][i]=='O')  
+            {
+                q.push({n-1,i});
+                board[n-1][i]='S';
+            }
         }
-        //first and last col
+        //first and last column
         for(int i=0;i<n;i++)
         {
-            if(board[i][0]=='O')     dfs(i,0,board);
-            if(board[i][m-1]=='O')   dfs(i,m-1,board);
+            if(board[i][0]=='O')   
+            {
+                q.push({i,0});
+                board[i][0]='S';
+            } 
+            if(board[i][m-1]=='O')  
+            {
+                q.push({i,m-1});
+                board[i][m-1]='S';
+            }
+        }
+        while(q.size())
+        {
+            auto[x,y]=q.front();
+            q.pop();
+            board[x][y]='S';
+            int dx[4]={0,1,0,-1};
+            int dy[4]={1,0,-1,0};
+            for(int i=0;i<4;i++)
+            {
+                int nx=x+dx[i];
+                int ny=y+dy[i];
+                if(nx>=0 && ny>=0 && nx<n && ny<m && board[nx][ny]=='O')
+                {
+                    q.push({nx,ny});
+                    board[nx][ny]='S';
+                }
+            }
         }
         for(int i=0;i<n;i++)
         {
             for(int j=0;j<m;j++)
             {
-                if(board[i][j]=='O')     board[i][j]='X';
-                if(board[i][j]=='S')     board[i][j]='O';
+                if(board[i][j]=='O')    board[i][j]='X';
+                if(board[i][j]=='S')    board[i][j]='O';
             }
         }
     }
